@@ -1,4 +1,4 @@
-![Image](images/banner.png)
+![Image](images/banner.jpg)
 # AI knowledge base
 
 ## Cursor
