@@ -1,61 +1,38 @@
 # DevinAI - djunod
 
-This is touted as a "Junior Coding Assistant", but so far I've given it pretty complicated tasks with Microsoft Maui and it has succeed pretty well with them.  
-I also had it successfully convert an old Windows .NET 4 app to .NET 8.  
-I'm not the kind of guy that reads a lot of documentation, I just tend to jump right in, so I started out by setting up a github repository, slack integration
-and just started giving Devin tasks.  It succeeded at everything that I gave it.  Eventually, I went back and updated the knowledge base.
+## General
+
+This is touted as a "Junior Coding Assistant", but so far I've given it pretty complicated tasks with Microsoft Maui and it has succeed pretty well with them.  I also had it successfully convert an old Windows .NET 4 app to .NET 8.  
+
+I'm not the kind of guy that reads a lot of documentation, I just tend to jump right in, so I started out by setting up a github repository, slack integration and just started giving Devin tasks.  It succeeded at everything that I gave it.  Eventually, I went back and updated the knowledge base.
+
+## Enhance Prompt
 
 One of the most useful tips that I've learned is to give Grok (or ChatGPT, whatever you prefer) a description for me to then feed to Devin.
 
 Here's a recent example of such a prompt:
 
 ```
-what prompt should I use to instruct my Devin.AI coding assistant to convert a microsoft .net 8 karaoke desktop application to maui using CommunityToolkit.Mvvm view/viewmodel architecture?
+what prompt should I use to instruct my Devin.AI coding assistant to convert a microsoft .net 4 desktop application to .net 8?
 ```
 
 Grok then gave me:
 
 ```
-I need you to assist me in converting an existing Microsoft .NET 8 karaoke desktop application to a cross-platform .NET MAUI application using the CommunityToolkit.Mvvm library for implementing the MVVM (Model-View-ViewModel) architecture. The original application is a Windows-only desktop app built with .NET 8, likely using Windows Forms, WPF, or a similar UI framework, and it includes features such as song selection, playback controls, lyrics display, and possibly file management for karaoke tracks. Your task is to refactor this application to work across multiple platforms (Windows, macOS, Android, and iOS) using .NET MAUI, while adopting the CommunityToolkit.Mvvm library for a clean MVVM structure.
-Here’s what I expect:
-Project Setup: Create a new .NET MAUI project configured for multi-platform support (Windows, macOS, Android, iOS). Ensure the project targets .NET 8 and includes the necessary MAUI workloads and dependencies.
+"I need you to assist me in converting a Microsoft .NET 4 desktop application to .NET 8. The application is a [Windows Forms/WPF/other] desktop app written in [C#/VB.NET/other language], originally targeting .NET Framework 4.0. Your task is to guide me through the migration process or provide updated code to make it compatible with .NET 8, which is a modern, cross-platform framework with long-term support. Please follow these steps:
+Analyze the Current Project: Review the existing project structure, including the .csproj file, dependencies (e.g., NuGet packages), and any third-party libraries. Identify any APIs or features that may not be supported in .NET 8 (e.g., AppDomains, Remoting, or System.Configuration).
 
-NuGet Packages: Add the CommunityToolkit.Mvvm NuGet package to the project to enable MVVM features like ObservableObject, RelayCommand, and source generators for property change notifications.
+Update the Project File: Convert the legacy .csproj file to the SDK-style project format used by .NET 8. Set the target framework to net8.0-windows (since this is a desktop app) and ensure it includes necessary properties like <UseWindowsForms>true> or <UseWPF>true> if applicable.
 
-Architecture:
-Models: Identify and preserve the core data structures from the original app (e.g., Song, Playlist, etc.) as plain C# classes representing the karaoke domain logic.
+Handle Dependencies: Update or replace NuGet packages to versions compatible with .NET 8. If a dependency isn’t available, suggest alternatives or workarounds.
 
-ViewModels: Refactor the business logic from the original app into ViewModels that inherit from ObservableObject. Use [ObservableProperty] attributes for data-bound properties and [RelayCommand] for commands (e.g., PlaySongCommand, LoadPlaylistCommand). Ensure ViewModels are platform-agnostic and handle asynchronous operations (e.g., file I/O, playback) using AsyncRelayCommand where needed.
+Refactor Code: Identify and update any code that uses deprecated or unsupported .NET Framework APIs. Provide replacements or alternatives compatible with .NET 8 (e.g., replace System.Configuration with Microsoft.Extensions.Configuration if applicable). Ensure the app remains functional on Windows.
 
-Views: Replace the original UI with MAUI XAML-based views (e.g., ContentPage) that bind to the ViewModels. Use MAUI controls like CollectionView for song lists, MediaElement for playback, and Label or custom controls for lyrics display. Set the BindingContext of each view to its corresponding ViewModel.
+Testing and Validation: Suggest steps to test the migrated application to ensure it works as expected after conversion. Highlight any potential breaking changes or areas needing manual review (e.g., UI layout changes due to font differences).
 
-Dependency Injection: Use MAUI’s built-in dependency injection (via MauiProgram.cs) to register services (e.g., file access, audio playback) and ViewModels as singletons or transients, then inject them into the Views or ViewModels as needed.
+Provide Instructions: Offer a step-by-step explanation of the changes made, including any manual actions I need to take in Visual Studio 2022 (version 17.8 or later) or via the .NET CLI.
 
-Platform-Specific Code: Handle any platform-specific requirements (e.g., file system access, audio playback APIs) using MAUI’s platform abstraction features or conditional compilation, ensuring the app remains functional across all targeted platforms.
-
-Key Features to Migrate:
-Song selection: Convert any list or grid of songs into a MAUI CollectionView bound to a ViewModel property.
-
-Playback controls: Implement play, pause, stop, and seek functionality using MAUI’s MediaElement or a custom audio service, controlled via ViewModel commands.
-
-Lyrics display: Sync lyrics with playback, possibly using a timer or event-driven approach in the ViewModel, and display them in the MAUI UI.
-
-File management: Adapt file loading/saving logic to work with MAUI’s cross-platform file system APIs.
-
-Steps to Follow:
-Analyze the existing .NET 8 karaoke app’s structure and identify its models, logic, and UI components.
-
-Create a new MAUI project and install CommunityToolkit.Mvvm.
-
-Port the models and logic into the new project, organizing them into MVVM components.
-
-Build the MAUI XAML views and bind them to the ViewModels.
-
-Test the app on at least two platforms (e.g., Windows and Android) to ensure cross-platform compatibility.
-
-Output: Provide the converted project structure, including key code files (e.g., MauiProgram.cs, ViewModels, XAML views, and any services), along with explanations of the changes made. If assumptions are needed about the original app’s code (since I haven’t provided it), base them on typical karaoke app functionality and note them clearly.
-
-Please proceed step-by-step, asking for clarification if needed, and provide the resulting code and project structure as you complete the conversion. Let’s start with setting up the MAUI project and integrating CommunityToolkit.Mvvm.
+Assume I have Visual Studio 2022 installed with the .NET 8 SDK. If you need specific code snippets or files from my project to proceed (e.g., .csproj, source code), let me know what to provide. Otherwise, provide a general approach with example code where relevant. Do not generate images unless I explicitly request them."
 ```
 
 I then fed that prompt into Slack using the following prefix:
@@ -63,3 +40,43 @@ I then fed that prompt into Slack using the following prefix:
 ```
 Hey @Devin, using the Reality-Check-Inc/HeresTheKaraokePrivate repository, using the develop branch,
 ```
+
+## SwiftUI
+
+Recently somebody asked if Devin could do Swift UI.
+
+One thing that I did have Devin fail on was creating or updating .xcodeproj files.  It did actually generate Swift code.
+
+I gave grok the following prompt:
+
+```
+what prompt should I use to instruct my Devin.AI coding assistant to update a simple iOS app to use OpenAI's Speech To Text and Text To Speech for an iOS chat app where you can talk with open AI's chat bot?
+```
+
+It gave me:
+
+```
+"Modify an existing SwiftUI-based iOS chat app to integrate OpenAI's Speech-to-Text and Text-to-Speech APIs, enabling users to interact with OpenAI's chatbot using voice input and output. The app should:
+Use AVFoundation to capture audio input from the device's microphone when the user taps a 'Record' button.
+
+Send the recorded audio to OpenAI's Speech-to-Text API (e.g., Whisper API) to convert it to text.
+
+Pass the transcribed text as a prompt to OpenAI's Chat API (e.g., GPT-3.5 or GPT-4) to generate a text response.
+
+Convert the chatbot's text response to speech using OpenAI's Text-to-Speech API.
+
+Play the synthesized audio response to the user using AVAudioPlayer or a similar framework.
+
+The UI should include:
+A chat interface displaying the conversation (user input and bot responses) as text.
+
+A 'Record' button to start/stop audio recording.
+
+Visual feedback (e.g., a waveform or 'Recording...' label) during recording.
+
+Playback controls or auto-play for the bot's audio response.
+
+Ensure the app handles errors gracefully (e.g., network issues, API failures) and includes necessary permissions (microphone access) in the Info.plist file. Use Alamofire or URLSession for API requests and assume I have an OpenAI API key ready to use. Provide the modified SwiftUI code with clear comments explaining the integration."
+```
+
+The results are [here](https://github.com/Reality-Check-Inc/DevinSwift)
